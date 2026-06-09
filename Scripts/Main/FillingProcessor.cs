@@ -14,8 +14,6 @@ public class FillingProcessor : MonoBehaviour
 
     [SerializeField] private int n, m;
 
-    [SerializeField] private Saver _saver;
-
     [SerializeField] private TileBase _newTileToRight;
     [SerializeField] private TileBase _defaultTile;
     [SerializeField] private TileBase[] _tileBases;
@@ -59,11 +57,6 @@ public class FillingProcessor : MonoBehaviour
         _opened = new bool[n, m];
         _isDead = false;
         _bombsNum = _fieldHolder.GetBombsNum();
-
-        if (_saver != null && _saver.IsLoadedGame)
-        {
-            _isFirstClick = false;
-        }
     }
 
     private void RefreshFieldFromHolder()
@@ -145,12 +138,9 @@ public class FillingProcessor : MonoBehaviour
             {
                 _isFirstClick = false;
 
-                if (!_saver.IsLoadedGame)
-                {
-                    _fieldHolder.RegenerateFieldForSafeClick(i, j);
-                    RefreshFieldFromHolder();
-                    _opened = new bool[n, m];
-                }
+                _fieldHolder.RegenerateFieldForSafeClick(i, j);
+                RefreshFieldFromHolder();
+                _opened = new bool[n, m];
 
                 TileBase centerTile = GetTileByBombsCount(0);
                 _tilemap.SetTile(cellPositionIndex, centerTile);
@@ -257,10 +247,7 @@ public class FillingProcessor : MonoBehaviour
             }
         }
     }
-    public void SetGameLoaded()
-    {
-        _isFirstClick = false;
-    }
+
     private TileBase GetTileByBombsCount(int count)
     {
         return count switch
