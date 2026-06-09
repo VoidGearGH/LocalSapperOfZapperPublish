@@ -41,6 +41,7 @@ public class FillingProcessor : MonoBehaviour
 
     private bool _isFirstClick = true;
     private bool _isDead = false;
+    private bool _isWin = false;
 
     private ushort _clickedCounter = 0;
     private int _bombsNum;
@@ -56,6 +57,7 @@ public class FillingProcessor : MonoBehaviour
         _audioSource = AudioProcessor.audioSource;
         _opened = new bool[n, m];
         _isDead = false;
+        _isWin = false;
         _bombsNum = _fieldHolder.GetBombsNum();
     }
 
@@ -82,10 +84,13 @@ public class FillingProcessor : MonoBehaviour
 
     private void Update()
     {
-        if (_isDead) return;
+        if (_isDead || _isWin) return;
 
-        if (_clickedCounter + _bombsNum == n * m) OnWin?.Invoke();
-
+        if (_clickedCounter + _bombsNum == n * m)
+        {
+            OnWin?.Invoke();
+            _isWin = true;
+        }
         if (_mouse.leftButton.wasReleasedThisFrame)
         {
             bool freezeFlag = false;
