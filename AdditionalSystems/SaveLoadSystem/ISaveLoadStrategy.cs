@@ -1,10 +1,6 @@
 using System.Collections.Generic;
-
 public interface ISaveLoadStrategy
 {
     public void Save(IEnumerable<ISaveLoadObject> objectsToSave);
     public SaveLoadData[] Load();
-    public bool HasSave();
-
-    void DeleteSave();
 }

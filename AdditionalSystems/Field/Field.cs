@@ -2,23 +2,19 @@ using UnityEngine;
 using NUnit.Framework;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-
 public class Field : ISaveLoadObject
 {
-    public string ComponentSaveId { get; private set; }
+    public string ComponentSaveId => "Field";
     public List<bool> Cells { get; private set; } = new();
 
-    public Field(bool[] cells, string sceneId)
+    public Field(bool[] cells)
     {
-        ComponentSaveId = $"Field_{sceneId}";
         Cells.AddRange(cells);
     }
-
     public SaveLoadData GetSaveLoadData()
     {
         return new FieldSLD(ComponentSaveId, Cells);
     }
-
     public void RestoreValues(SaveLoadData loadData)
     {
         Cells.Clear();

@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
-
+using static UnityEngine.Rendering.DebugUI;
 public class FieldHolder : MonoBehaviour
 {
     [field: SerializeField] public Field Field { get; private set; }
@@ -9,25 +9,21 @@ public class FieldHolder : MonoBehaviour
     [SerializeField] private int n;
     [SerializeField] private int m;
     [SerializeField] private int bombsNum;
-    [SerializeField] private string sceneId; // "Easy" / "Medium" / "Hard"
 
     private List<bool> loadedCells = null;
-
     private void Awake()
     {
         FieldGenerator fd = new FieldGenerator(n, m, bombsNum);
         var cells = fd.GetField().ToArray();
 
-        Field = new Field(cells, sceneId);
+        Field = new Field(cells);
 
         loadedCells = Field.Cells;
     }
-
     public void UpdateCells()
     {
         loadedCells = Field.Cells;
     }
-
     public void RegenerateFieldForSafeClick(int clickI, int clickJ)
     {
         List<int> excluded = new List<int>();
@@ -48,10 +44,9 @@ public class FieldHolder : MonoBehaviour
 
         var generator = new FieldGenerator(n, m, bombsNum, excluded);
         var cells = generator.GetField().ToArray();
-        Field = new Field(cells, sceneId);
+        Field = new Field(cells);
         loadedCells = Field.Cells;
     }
-
     public List<bool> GetField()
     {
         if (loadedCells == null) return null;
@@ -64,6 +59,5 @@ public class FieldHolder : MonoBehaviour
 
         return toGetList;
     }
-
     public int GetBombsNum() { return bombsNum; }
 }

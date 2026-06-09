@@ -4,22 +4,14 @@ using UnityEngine;
 using System;
 using System.Linq;
 using Newtonsoft.Json;
-
 public class FileSaveLoadStrategy : ISaveLoadStrategy
 {
     private const string SaveFolderName = "Saves";
-    private readonly string _saveFileName;
+
+    private const string SaveFileName = "GameSaveFile.json";
 
     private static string SaveDataFolder => Path.Combine(Application.persistentDataPath, SaveFolderName);
-    private string SaveFilePath => Path.Combine(SaveDataFolder, _saveFileName);
-
-    public FileSaveLoadStrategy(string saveFileName)
-    {
-        _saveFileName = saveFileName;
-    }
-
-    public bool HasSave() => File.Exists(SaveFilePath);
-
+    private static string SaveFilePath => Path.Combine(SaveDataFolder, SaveFileName);
     public void Save(IEnumerable<ISaveLoadObject> objectsToSave)
     {
         try
@@ -32,18 +24,12 @@ public class FileSaveLoadStrategy : ISaveLoadStrategy
             var serializedSaveFile = JsonConvert.SerializeObject(saveFile);
 
             File.WriteAllText(SaveFilePath, serializedSaveFile);
-            Debug.Log($"Saved to {SaveFilePath}");
         }
         catch (Exception e)
         {
             Debug.LogException(e);
             throw;
         }
-    }
-    public void DeleteSave()
-    {
-        if (File.Exists(SaveFilePath))
-            File.Delete(SaveFilePath);
     }
     public SaveLoadData[] Load()
     {
@@ -62,7 +48,7 @@ public class FileSaveLoadStrategy : ISaveLoadStrategy
                 return null;
             }
 
-            Debug.Log($"Loaded from {SaveFilePath}");
+            Debug.Log($"Save file to {SaveFilePath}");
             return JsonConvert.DeserializeObject<SaveFile>(serializedFile).Data.ToArray();
         }
         catch (Exception e)

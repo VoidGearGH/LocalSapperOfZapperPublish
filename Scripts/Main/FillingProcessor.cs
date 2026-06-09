@@ -59,6 +59,11 @@ public class FillingProcessor : MonoBehaviour
         _opened = new bool[n, m];
         _isDead = false;
         _bombsNum = _fieldHolder.GetBombsNum();
+
+        if (_saver != null && _saver.IsLoadedGame)
+        {
+            _isFirstClick = false;
+        }
     }
 
     private void RefreshFieldFromHolder()
@@ -252,7 +257,10 @@ public class FillingProcessor : MonoBehaviour
             }
         }
     }
-
+    public void SetGameLoaded()
+    {
+        _isFirstClick = false;
+    }
     private TileBase GetTileByBombsCount(int count)
     {
         return count switch
