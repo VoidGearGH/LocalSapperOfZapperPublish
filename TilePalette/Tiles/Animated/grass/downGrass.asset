@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: downGrass
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: -8463761115779227750, guid: 8610e397d34143a4abb94c207cf7fc44, type: 3}
+  - {fileID: 7074934231213831753, guid: 5b6673988614c004e92e0da0d3c0a7fe, type: 3}
+  - {fileID: -5733141171311711767, guid: f3250e6871ca7df418de4f8266673abd, type: 3}
+  - {fileID: 7074934231213831753, guid: 5b6673988614c004e92e0da0d3c0a7fe, type: 3}
+  - {fileID: -8463761115779227750, guid: 8610e397d34143a4abb94c207cf7fc44, type: 3}
+  m_MinSpeed: 1.5
+  m_MaxSpeed: 1.5
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0
+  m_TileAnimationFlags: 0

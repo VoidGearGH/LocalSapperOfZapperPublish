@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: pressedGrass
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: -5552114211337345733, guid: cc0d10cc82cd13c4db87c4ceb4fce48e, type: 3}
+  - {fileID: 8212435028294714435, guid: 181cc829fde38444390be0b436396bc5, type: 3}
+  - {fileID: -7378469333106231298, guid: 5077092a194e19241a1c915c6cd8b76c, type: 3}
+  - {fileID: -828191855689371896, guid: e096fa046ed77a646af769bb99af1d41, type: 3}
+  - {fileID: 423968222925049105, guid: 60d9b1a089f6dcf4c80149b4df18053d, type: 3}
+  - {fileID: -1366979729352326026, guid: ae051ed070175cd4a898a826706fb3c1, type: 3}
+  - {fileID: 7574444874526390099, guid: f8dc80d86b940be47853048e4d494fab, type: 3}
+  - {fileID: 1717705220810035855, guid: 55edee70e74769c41b37539f5c0d0e8e, type: 3}
+  - {fileID: 1717705220810035855, guid: 55edee70e74769c41b37539f5c0d0e8e, type: 3}
+  - {fileID: 7574444874526390099, guid: f8dc80d86b940be47853048e4d494fab, type: 3}
+  - {fileID: -1366979729352326026, guid: ae051ed070175cd4a898a826706fb3c1, type: 3}
+  - {fileID: 423968222925049105, guid: 60d9b1a089f6dcf4c80149b4df18053d, type: 3}
+  - {fileID: -828191855689371896, guid: e096fa046ed77a646af769bb99af1d41, type: 3}
+  - {fileID: -7378469333106231298, guid: 5077092a194e19241a1c915c6cd8b76c, type: 3}
+  - {fileID: 8212435028294714435, guid: 181cc829fde38444390be0b436396bc5, type: 3}
+  - {fileID: -5552114211337345733, guid: cc0d10cc82cd13c4db87c4ceb4fce48e, type: 3}
+  m_MinSpeed: 16
+  m_MaxSpeed: 16
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0
+  m_TileAnimationFlags: 0

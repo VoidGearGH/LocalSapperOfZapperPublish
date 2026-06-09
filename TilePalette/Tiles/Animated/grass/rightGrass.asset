@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: rightGrass
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: -5319934386366246517, guid: cd99925021e1e7c42a5c1d39f458288b, type: 3}
+  - {fileID: -8709392698037307671, guid: 294c670e32fb19d4ab4376592cd91ec2, type: 3}
+  - {fileID: 8153863813368634627, guid: 3150febdbfa1c57489b8a6a71442fe57, type: 3}
+  - {fileID: -8709392698037307671, guid: 294c670e32fb19d4ab4376592cd91ec2, type: 3}
+  - {fileID: -5319934386366246517, guid: cd99925021e1e7c42a5c1d39f458288b, type: 3}
+  m_MinSpeed: 1.5
+  m_MaxSpeed: 1.5
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0
+  m_TileAnimationFlags: 16
