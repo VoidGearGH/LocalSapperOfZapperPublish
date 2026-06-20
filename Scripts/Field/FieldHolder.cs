@@ -6,17 +6,18 @@ public class FieldHolder : MonoBehaviour
 {
     [field: SerializeField] public Field Field { get; private set; }
 
-    [SerializeField] private int n;
-    [SerializeField] private int m;
-    [SerializeField] private int bombsNum;
+    [SerializeField] private int _n;
+    [SerializeField] private int _m;
+    [SerializeField] private int _bombsNum;
+    [SerializeField] private string _mode;
 
     private List<bool> loadedCells = null;
     private void Awake()
     {
-        FieldGenerator fd = new FieldGenerator(n, m, bombsNum);
+        FieldGenerator fd = new FieldGenerator(_n, _m, _bombsNum);
         var cells = fd.GetField().ToArray();
 
-        Field = new Field(cells);
+        Field = new Field(cells, _mode);
 
         loadedCells = Field.Cells;
     }
@@ -33,18 +34,18 @@ public class FieldHolder : MonoBehaviour
             {
                 int ni = clickI + di;
                 int nj = clickJ + dj;
-                if (ni >= 0 && ni < n && nj >= 0 && nj < m)
+                if (ni >= 0 && ni < _n && nj >= 0 && nj < _m)
                 {
-                    int idx = ni * m + nj;
+                    int idx = ni * _m + nj;
                     if (!excluded.Contains(idx))
                         excluded.Add(idx);
                 }
             }
         }
 
-        var generator = new FieldGenerator(n, m, bombsNum, excluded);
+        var generator = new FieldGenerator(_n, _m, _bombsNum, excluded);
         var cells = generator.GetField().ToArray();
-        Field = new Field(cells);
+        Field = new Field(cells, _mode);
         loadedCells = Field.Cells;
     }
     public List<bool> GetField()
@@ -59,5 +60,5 @@ public class FieldHolder : MonoBehaviour
 
         return toGetList;
     }
-    public int GetBombsNum() => bombsNum;
+    public int GetBombsNum() => _bombsNum;
 }

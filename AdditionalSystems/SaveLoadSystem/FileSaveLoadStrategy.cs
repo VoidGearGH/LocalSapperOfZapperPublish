@@ -9,7 +9,6 @@ public class FileSaveLoadStrategy : ISaveLoadStrategy
     private const string SaveFolderName = "Saves";
 
     private const string SaveFileName = "GameSaveFile.json";
-
     private static string SaveDataFolder => Path.Combine(Application.persistentDataPath, SaveFolderName);
     private static string SaveFilePath => Path.Combine(SaveDataFolder, SaveFileName);
     public void Save(IEnumerable<ISaveLoadObject> objectsToSave)

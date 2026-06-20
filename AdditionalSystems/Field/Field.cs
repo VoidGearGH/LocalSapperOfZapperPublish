@@ -4,18 +4,27 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 public class Field : ISaveLoadObject
 {
-    public string ComponentSaveId => "Field";
     public List<bool> Cells { get; private set; } = new();
-
-    public Field(bool[] cells)
+    public Field(bool[] cells, string mode)
     {
         Cells.AddRange(cells);
+
+        ComponentSaveId = mode switch
+        {
+            "Easy" => "EasyField",
+            "Medium" => "MediumField",
+            "Hard" => "HardField",
+            _ => null
+        };
     }
-    public SaveLoadData GetSaveLoadData()
+    public override SaveLoadData GetSaveLoadData()
     {
+        if(string.IsNullOrEmpty(ComponentSaveId))
+            return null;
+
         return new FieldSLD(ComponentSaveId, Cells);
     }
-    public void RestoreValues(SaveLoadData loadData)
+    public override void RestoreValues(SaveLoadData loadData)
     {
         Cells.Clear();
 

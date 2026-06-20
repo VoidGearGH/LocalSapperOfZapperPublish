@@ -4,7 +4,6 @@ public class Saver : MonoBehaviour
 {
     [SerializeField] private FieldHolder _fieldHolder;
     private SaveLoadSystem _saveLoadSystem;
-
     private void Start()
     {
         if (_fieldHolder == null)
@@ -15,6 +14,8 @@ public class Saver : MonoBehaviour
 
         _saveLoadSystem ??= new();
         _saveLoadSystem.AddToSaveLoad(_fieldHolder.Field);
+
+        Load();
     }
     public void Save()
     {
@@ -25,5 +26,9 @@ public class Saver : MonoBehaviour
         _saveLoadSystem.LoadGame(SaveType.File);
 
         _fieldHolder.UpdateCells();
+    }
+    private void OnApplicationQuit()
+    {
+        Save();   
     }
 }

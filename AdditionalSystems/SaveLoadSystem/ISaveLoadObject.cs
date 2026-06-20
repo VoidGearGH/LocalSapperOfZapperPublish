@@ -1,7 +1,7 @@
 using UnityEngine;
-public interface ISaveLoadObject
+public abstract class ISaveLoadObject
 {
-    public string ComponentSaveId { get; }
-    public SaveLoadData GetSaveLoadData();
-    public void RestoreValues(SaveLoadData loadData);
+    public string ComponentSaveId;
+    public abstract SaveLoadData GetSaveLoadData();
+    public abstract void RestoreValues(SaveLoadData loadData);
 }
