@@ -1,7 +1,7 @@
 [System.Serializable]
 public class SaveLoadData
 {
-    public SaveLoadData(string id, object[] data)
+    public SaveLoadData(string id, params object[] data)
     {
         Id = id;
         Data = data;
