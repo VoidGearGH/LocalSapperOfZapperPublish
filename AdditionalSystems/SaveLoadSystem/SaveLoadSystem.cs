@@ -43,6 +43,8 @@ public class SaveLoadSystem
     {
         var loadedData = strategy.Load();
 
+        if (loadedData == null) return;
+
         foreach (var data in loadedData)
         {
             var objectId = data.Id;
