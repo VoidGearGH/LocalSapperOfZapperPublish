@@ -59,5 +59,5 @@ public class FieldHolder : MonoBehaviour
 
         return toGetList;
     }
-    public int GetBombsNum() { return bombsNum; }
+    public int GetBombsNum() => bombsNum;
 }
