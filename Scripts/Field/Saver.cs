@@ -1,9 +1,16 @@
+using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 public class Saver : MonoBehaviour
 {
     [SerializeField] private FieldHolder _fieldHolder;
     private SaveLoadSystem _saveLoadSystem;
+
+    private const string SaveFolderName = "Saves";
+
+    private const string SaveFileName = "GameSaveFile.json";
+    private static string SaveDataFolder => Path.Combine(Application.persistentDataPath, SaveFolderName);
+    private static string SaveFilePath => Path.Combine(SaveDataFolder, SaveFileName);
     private void Start()
     {
         if (_fieldHolder == null)
@@ -15,7 +22,8 @@ public class Saver : MonoBehaviour
         _saveLoadSystem ??= new();
         _saveLoadSystem.AddToSaveLoad(_fieldHolder.Field);
 
-        Load();
+        if(File.Exists(SaveFilePath))
+            Load();
     }
     public void Save()
     {
@@ -29,6 +37,6 @@ public class Saver : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
-        Save();   
+        Save();
     }
 }

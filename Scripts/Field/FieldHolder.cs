@@ -61,4 +61,15 @@ public class FieldHolder : MonoBehaviour
         return toGetList;
     }
     public int GetBombsNum() => _bombsNum;
+    public string GetMode()
+    {
+        string toReturn = "";
+
+        foreach(char c in _mode)
+        {
+            toReturn += c;
+        }
+
+        return toReturn;
+    }
 }
