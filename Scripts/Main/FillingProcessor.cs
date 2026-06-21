@@ -80,8 +80,6 @@ public class FillingProcessor : MonoBehaviour
         for (int i = 0; i < n; i++)
             for (int j = 0; j < m; j++)
                 _fieldTD[i, j] = flatField[i * m + j];
-
-        Debug.Log($"[FillingProcessor.Refresh] Read field, first 5: {_fieldHolder.GetField().GetRange(0, 5).Select(b => b.ToString()).Aggregate((a, b) => a + "," + b)}");
     }
 
     private void Update()
@@ -141,7 +139,7 @@ public class FillingProcessor : MonoBehaviour
 
             _opened[i, j] = true;
 
-            if (_isFirstClick && !_fieldHolder.IsLoaded)
+            if (_isFirstClick && !_fieldHolder.Field.IsRestored)
             {
                 _isFirstClick = false;
 

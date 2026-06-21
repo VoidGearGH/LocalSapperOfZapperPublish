@@ -40,5 +40,7 @@ public class Field : ISaveLoadObject
         Cells.AddRange(cells);
 
         Debug.Log($"[Field.RestoreValues] Restored, first 5: {string.Join(",", Cells.GetRange(0, 5))}");
+        
+        IsRestored = true;
     }
 }

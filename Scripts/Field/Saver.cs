@@ -44,7 +44,6 @@ public class Saver : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
-        Debug.Log($"[Saver.OnApplicationQuit] Saving, first 5: {string.Join(",", _fieldHolder.Field.Cells.GetRange(0, 5))}");
         Save();
     }
 
