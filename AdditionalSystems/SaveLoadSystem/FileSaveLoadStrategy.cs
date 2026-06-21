@@ -15,19 +15,35 @@ public class FileSaveLoadStrategy : ISaveLoadStrategy
     {
         try
         {
-            var serializedData = objectsToSave
+            var newData = objectsToSave
                 .Select(obj => obj.GetSaveLoadData())
                 .Where(data => data != null)
                 .ToList();
 
-            if (!Directory.Exists(SaveDataFolder))
-                Directory.CreateDirectory(SaveDataFolder);
+            List<SaveLoadData> existingData = new List<SaveLoadData>();
+            if (File.Exists(SaveFilePath))
+            {
+                var json = File.ReadAllText(SaveFilePath);
+                if (!string.IsNullOrEmpty(json))
+                {
+                    var existingFile = JsonConvert.DeserializeObject<SaveFile>(json);
+                    if (existingFile.Data != null)
+                        existingData = existingFile.Data.ToList();
+                }
+            }
 
-            var saveFile = new SaveFile(serializedData);
-            var json = JsonConvert.SerializeObject(saveFile);
-            File.WriteAllText(SaveFilePath, json);
+            var dict = existingData.ToDictionary(d => d.Id);
+            foreach (var data in newData)
+            {
+                dict[data.Id] = data;
+            }
 
-            Debug.Log($"Saved {serializedData.Count} components.");
+            var mergedData = dict.Values.ToList();
+            var saveFile = new SaveFile(mergedData);
+            var jsonOut = JsonConvert.SerializeObject(saveFile);
+            File.WriteAllText(SaveFilePath, jsonOut);
+
+            Debug.Log($"Saved {mergedData.Count} components (merged).");
         }
         catch (Exception e)
         {
