@@ -49,7 +49,9 @@ public class FieldHolder : MonoBehaviour
 
         var generator = new FieldGenerator(_n, _m, _bombsNum, excluded);
         var cells = generator.GetField().ToArray();
-        Field = new Field(cells, _mode);
+        
+        Field.Cells.Clear();
+        Field.Cells.AddRange(cells);
         loadedCells = Field.Cells;
     }
     public List<bool> GetField()
