@@ -69,4 +69,14 @@ public class FileSaveLoadStrategy : ISaveLoadStrategy
             throw;
         }
     }
+    public void DeleteById(string id)
+    {
+        if (!File.Exists(SaveFilePath)) return;
+
+        var existingFile = JsonConvert.DeserializeObject<SaveFile>(File.ReadAllText(SaveFilePath));
+        if (existingFile.Data == null) return;
+
+        var newData = existingFile.Data.Where(d => d.Id != id).ToList();
+        File.WriteAllText(SaveFilePath, JsonConvert.SerializeObject(new SaveFile(newData)));
+    }
 }

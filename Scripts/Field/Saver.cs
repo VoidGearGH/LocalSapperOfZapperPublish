@@ -47,4 +47,19 @@ public class Saver : MonoBehaviour
         Debug.Log($"[Saver.OnApplicationQuit] Saving, first 5: {string.Join(",", _fieldHolder.Field.Cells.GetRange(0, 5))}");
         Save();
     }
+
+    private void OnEnable()
+    {
+        FillingProcessor.OnDeath += DeleteSave;
+        FillingProcessor.OnWin += DeleteSave;
+    }
+    private void OnDisable()
+    {
+        FillingProcessor.OnDeath -= DeleteSave;
+        FillingProcessor.OnWin -= DeleteSave;
+    }
+    public void DeleteSave()
+    {
+        _saveLoadSystem.DeleteSave();
+    }
 }

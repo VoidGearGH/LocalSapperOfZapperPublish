@@ -1,6 +1,7 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 public enum SaveType
 {
     File, SteamCloud
@@ -56,5 +57,11 @@ public class SaveLoadSystem
 
             componentsIdToSaveObject[objectId].RestoreValues(data);
         }
+    }
+    public void DeleteSave()
+    {
+        fileSaveLoadStrategy.DeleteById(
+            componentsIdToSaveObject.Keys.First()
+        );
     }
 }

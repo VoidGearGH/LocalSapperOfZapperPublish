@@ -3,4 +3,5 @@ public interface ISaveLoadStrategy
 {
     public void Save(IEnumerable<ISaveLoadObject> objectsToSave);
     public SaveLoadData[] Load();
+    public void DeleteById(string id);
 }
