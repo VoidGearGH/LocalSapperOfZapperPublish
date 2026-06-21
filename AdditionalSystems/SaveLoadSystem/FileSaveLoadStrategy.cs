@@ -15,6 +15,10 @@ public class FileSaveLoadStrategy : ISaveLoadStrategy
     {
         try
         {
+            string folder = Path.GetDirectoryName(SaveFilePath);
+            if (!Directory.Exists(folder))
+                Directory.CreateDirectory(folder);
+
             var newData = objectsToSave
                 .Select(obj => obj.GetSaveLoadData())
                 .Where(data => data != null)
