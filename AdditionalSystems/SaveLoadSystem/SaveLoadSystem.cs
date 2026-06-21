@@ -50,7 +50,7 @@ public class SaveLoadSystem
             var objectId = data.Id;
             if (!componentsIdToSaveObject.ContainsKey(objectId))
             {
-                Debug.LogError($"Can't restore data for object with id {objectId}");
+                Debug.LogWarning($"Can't restore data for object with id {objectId}");
                 continue;
             }
 

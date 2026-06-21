@@ -1,8 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
-using System.Collections.Generic;
 
 [RequireComponent(typeof(Tilemap))]
 public class FillingProcessor : MonoBehaviour
@@ -53,7 +54,6 @@ public class FillingProcessor : MonoBehaviour
     }
     private void Start()
     {
-        RefreshFieldFromHolder();
         _audioSource = AudioProcessor.audioSource;
         _opened = new bool[n, m];
         _isDead = false;
@@ -61,7 +61,7 @@ public class FillingProcessor : MonoBehaviour
         _bombsNum = _fieldHolder.GetBombsNum();
     }
 
-    private void RefreshFieldFromHolder()
+    public void RefreshFieldFromHolder()
     {
         if (_fieldHolder == null)
         {
@@ -80,6 +80,8 @@ public class FillingProcessor : MonoBehaviour
         for (int i = 0; i < n; i++)
             for (int j = 0; j < m; j++)
                 _fieldTD[i, j] = flatField[i * m + j];
+
+        Debug.Log($"[FillingProcessor.Refresh] Read field, first 5: {_fieldHolder.GetField().GetRange(0, 5).Select(b => b.ToString()).Aggregate((a, b) => a + "," + b)}");
     }
 
     private void Update()
@@ -139,7 +141,7 @@ public class FillingProcessor : MonoBehaviour
 
             _opened[i, j] = true;
 
-            if (_isFirstClick)
+            if (_isFirstClick && !_fieldHolder.IsLoaded)
             {
                 _isFirstClick = false;
 

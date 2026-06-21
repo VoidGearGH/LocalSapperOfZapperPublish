@@ -4,6 +4,7 @@ using UnityEngine;
 public class Saver : MonoBehaviour
 {
     [SerializeField] private FieldHolder _fieldHolder;
+    [SerializeField] private FillingProcessor _fillingProcessor;
     private SaveLoadSystem _saveLoadSystem;
 
     private const string SaveFolderName = "Saves";
@@ -22,8 +23,12 @@ public class Saver : MonoBehaviour
         _saveLoadSystem ??= new();
         _saveLoadSystem.AddToSaveLoad(_fieldHolder.Field);
 
-        if(File.Exists(SaveFilePath))
+        if (File.Exists(SaveFilePath))
+        {
             Load();
+        }
+        
+        Save();
     }
     public void Save()
     {
@@ -34,9 +39,12 @@ public class Saver : MonoBehaviour
         _saveLoadSystem.LoadGame(SaveType.File);
 
         _fieldHolder.UpdateCells();
+
+        _fillingProcessor.RefreshFieldFromHolder();
     }
     private void OnApplicationQuit()
     {
+        Debug.Log($"[Saver.OnApplicationQuit] Saving, first 5: {string.Join(",", _fieldHolder.Field.Cells.GetRange(0, 5))}");
         Save();
     }
 }

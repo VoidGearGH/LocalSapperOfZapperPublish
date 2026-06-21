@@ -17,6 +17,19 @@ public class FileSaveLoadStrategy : ISaveLoadStrategy
         {
             var serializedData = objectsToSave.Select(@object => @object.GetSaveLoadData()).ToList();
 
+            if (File.Exists(SaveFilePath))
+            {
+                var existingFile = JsonConvert.DeserializeObject<SaveFile>(File.ReadAllText(SaveFilePath));
+                if (existingFile.Data != null)
+                {
+                    foreach (var existing in existingFile.Data)
+                    {
+                        if (!serializedData.Any(d => d.Id == existing.Id))
+                            serializedData.Add(existing);
+                    }
+                }
+            }
+
             if (!Directory.Exists(SaveDataFolder)) Directory.CreateDirectory(SaveDataFolder);
 
             var saveFile = new SaveFile(serializedData);

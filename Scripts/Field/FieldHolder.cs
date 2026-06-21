@@ -10,6 +10,7 @@ public class FieldHolder : MonoBehaviour
     [SerializeField] private int _m;
     [SerializeField] private int _bombsNum;
     [SerializeField] private string _mode;
+    public bool IsLoaded { get; private set; } = false;
 
     private List<bool> loadedCells = null;
     private void Awake()
@@ -20,10 +21,13 @@ public class FieldHolder : MonoBehaviour
         Field = new Field(cells, _mode);
 
         loadedCells = Field.Cells;
+
+        Debug.Log($"[FieldHolder.Awake] Generated field, first 5: {string.Join(",", Field.Cells.GetRange(0, 5))}");
     }
     public void UpdateCells()
     {
         loadedCells = Field.Cells;
+        IsLoaded = true;
     }
     public void RegenerateFieldForSafeClick(int clickI, int clickJ)
     {
