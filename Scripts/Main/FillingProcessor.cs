@@ -52,11 +52,11 @@ public class FillingProcessor : MonoBehaviour
         _tilemap = GetComponent<Tilemap>();
         _mouse = Mouse.current;
         _camera = Camera.main;
+        _opened = new bool[n, m];
     }
     private void Start()
     {
         _audioSource = AudioProcessor.audioSource;
-        _opened = new bool[n, m];
         _isDead = false;
         _isWin = false;
         _bombsNum = _fieldHolder.GetBombsNum();
@@ -84,6 +84,11 @@ public class FillingProcessor : MonoBehaviour
     }
     public List<bool> GetOpenedCellsFlat()
     {
+        if (_opened == null)
+        {
+            Debug.LogWarning("_opened is null, returning empty list.");
+            return new List<bool>(n * m);
+        }
         var flat = new List<bool>(n * m);
         for (int i = 0; i < n; i++)
             for (int j = 0; j < m; j++)
@@ -104,27 +109,23 @@ public class FillingProcessor : MonoBehaviour
                 _opened[i, j] = flatOpened[i * cols + j];
 
         for (int i = 0; i < rows; i++)
-        {
             for (int j = 0; j < cols; j++)
-            {
                 if (_opened[i, j])
                 {
                     Vector3Int pos = new Vector3Int(j - 6, -(i - 2), 0);
-                    
                     int bombs = GetBombsNum(i, j);
                     TileBase tile = GetTileByBombsCount(bombs);
                     _tilemap.SetTile(pos, tile);
                 }
-            }
-        }
 
-        // Обновляем счётчик открытых клеток
         _clickedCounter = 0;
         for (int i = 0; i < rows; i++)
             for (int j = 0; j < cols; j++)
                 if (_opened[i, j]) _clickedCounter++;
 
         _isFirstClick = false;
+
+        Debug.Log($"Restored {_clickedCounter} opened cells.");
     }
     private void Update()
     {

@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 public class Saver : MonoBehaviour
@@ -33,18 +34,24 @@ public class Saver : MonoBehaviour
     }
     public void Save()
     {
-        _fieldHolder.UpdateOpenCellsFromProcessor(_fillingProcessor.GetOpenedCellsFlat());
+        var flat = _fillingProcessor.GetOpenedCellsFlat();
+        int openedCount = flat.Count(b => b);
+        Debug.Log($"Saving {openedCount} opened cells out of {flat.Count}");
+        _fieldHolder.UpdateOpenCellsFromProcessor(flat);
         _saveLoadSystem.SaveGame(SaveType.File);
     }
     public void Load()
     {
+        Debug.Log("Loading save...");
         _saveLoadSystem.LoadGame(SaveType.File);
 
         _fieldHolder.UpdateCells();
-
         _fillingProcessor.RefreshFieldFromHolder();
-
         _fieldHolder.ApplyOpenedCellsToProcessor(_fillingProcessor);
+
+        var flat = _fillingProcessor.GetOpenedCellsFlat();
+        int openedCount = flat.Count(b => b);
+        Debug.Log($"Loaded {openedCount} opened cells.");
     }
     private void OnApplicationQuit()
     {
