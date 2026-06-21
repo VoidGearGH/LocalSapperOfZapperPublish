@@ -22,6 +22,7 @@ public class Saver : MonoBehaviour
 
         _saveLoadSystem ??= new();
         _saveLoadSystem.AddToSaveLoad(_fieldHolder.Field);
+        _saveLoadSystem.AddToSaveLoad(_fieldHolder.OpenedField);
 
         if (File.Exists(SaveFilePath))
         {
@@ -32,6 +33,7 @@ public class Saver : MonoBehaviour
     }
     public void Save()
     {
+        _fieldHolder.UpdateOpenCellsFromProcessor(_fillingProcessor.GetOpenedCellsFlat());
         _saveLoadSystem.SaveGame(SaveType.File);
     }
     public void Load()
@@ -41,6 +43,8 @@ public class Saver : MonoBehaviour
         _fieldHolder.UpdateCells();
 
         _fillingProcessor.RefreshFieldFromHolder();
+
+        _fieldHolder.ApplyOpenedCellsToProcessor(_fillingProcessor);
     }
     private void OnApplicationQuit()
     {

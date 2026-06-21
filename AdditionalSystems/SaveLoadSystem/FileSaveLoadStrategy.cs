@@ -79,4 +79,15 @@ public class FileSaveLoadStrategy : ISaveLoadStrategy
         var newData = existingFile.Data.Where(d => d.Id != id).ToList();
         File.WriteAllText(SaveFilePath, JsonConvert.SerializeObject(new SaveFile(newData)));
     }
+    public void DeleteAll(IEnumerable<string> ids)
+    {
+        if (!File.Exists(SaveFilePath)) return;
+
+        var existingFile = JsonConvert.DeserializeObject<SaveFile>(File.ReadAllText(SaveFilePath));
+        if (existingFile.Data == null) return;
+
+        var idsSet = new HashSet<string>(ids);
+        var newData = existingFile.Data.Where(d => !idsSet.Contains(d.Id)).ToList();
+        File.WriteAllText(SaveFilePath, JsonConvert.SerializeObject(new SaveFile(newData)));
+    }
 }

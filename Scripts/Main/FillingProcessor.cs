@@ -36,6 +36,7 @@ public class FillingProcessor : MonoBehaviour
     private Camera _camera;
 
     private bool[,] _fieldTD;
+    
     private bool[,] _opened;
 
     private AudioSource _audioSource;
@@ -81,7 +82,50 @@ public class FillingProcessor : MonoBehaviour
             for (int j = 0; j < m; j++)
                 _fieldTD[i, j] = flatField[i * m + j];
     }
+    public List<bool> GetOpenedCellsFlat()
+    {
+        var flat = new List<bool>(n * m);
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+                flat.Add(_opened[i, j]);
+        return flat;
+    }
+    public void RestoreOpenedCells(List<bool> flatOpened, int rows, int cols)
+    {
+        if (flatOpened == null || flatOpened.Count != rows * cols)
+        {
+            Debug.LogError("Invalid opened cells data");
+            return;
+        }
 
+        _opened = new bool[rows, cols];
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j < cols; j++)
+                _opened[i, j] = flatOpened[i * cols + j];
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                if (_opened[i, j])
+                {
+                    Vector3Int pos = new Vector3Int(j - 6, -(i - 2), 0);
+                    
+                    int bombs = GetBombsNum(i, j);
+                    TileBase tile = GetTileByBombsCount(bombs);
+                    _tilemap.SetTile(pos, tile);
+                }
+            }
+        }
+
+        // Обновляем счётчик открытых клеток
+        _clickedCounter = 0;
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j < cols; j++)
+                if (_opened[i, j]) _clickedCounter++;
+
+        _isFirstClick = false;
+    }
     private void Update()
     {
         if (_isDead || _isWin) return;

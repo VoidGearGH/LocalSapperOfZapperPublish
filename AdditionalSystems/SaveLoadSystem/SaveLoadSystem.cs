@@ -60,8 +60,8 @@ public class SaveLoadSystem
     }
     public void DeleteSave()
     {
-        fileSaveLoadStrategy.DeleteById(
-            componentsIdToSaveObject.Keys.First()
-        );
+        var ids = componentsIdToSaveObject.Keys.ToList();
+        if (ids.Any())
+            fileSaveLoadStrategy.DeleteAll(ids);
     }
 }

@@ -5,6 +5,7 @@ using static UnityEngine.Rendering.DebugUI;
 public class FieldHolder : MonoBehaviour
 {
     [field: SerializeField] public Field Field { get; private set; }
+    [field: SerializeField] public OpenedField OpenedField { get; private set; }
 
     [SerializeField] private int _n;
     [SerializeField] private int _m;
@@ -15,11 +16,13 @@ public class FieldHolder : MonoBehaviour
     private void Awake()
     {
         FieldGenerator fd = new FieldGenerator(_n, _m, _bombsNum);
+        
         var cells = fd.GetField().ToArray();
-
         Field = new Field(cells, _mode);
-
         loadedCells = Field.Cells;
+
+        OpenedField = new OpenedField(_mode);
+        OpenedField.Initialize(_n * _m);
     }
     public void UpdateCells()
     {
@@ -43,12 +46,24 @@ public class FieldHolder : MonoBehaviour
             }
         }
 
+        OpenedField.Initialize(_n * _m);
+
         var generator = new FieldGenerator(_n, _m, _bombsNum, excluded);
         var cells = generator.GetField().ToArray();
-        
+
         Field.Cells.Clear();
         Field.Cells.AddRange(cells);
         loadedCells = Field.Cells;
+    }
+    public void UpdateOpenCellsFromProcessor(List<bool> flatOpened)
+    {
+        OpenedField.Cells.Clear();
+        OpenedField.Cells.AddRange(flatOpened);
+    }
+    public void ApplyOpenedCellsToProcessor(FillingProcessor processor)
+    {
+        if (OpenedField.IsRestored)
+            processor.RestoreOpenedCells(OpenedField.Cells, _n, _m);
     }
     public List<bool> GetField()
     {
